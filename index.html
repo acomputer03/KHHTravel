@@ -20,7 +20,10 @@
         <h1 class="text-white" style="margin-bottom: 95px">高雄旅遊資訊</h1>
         <div class="row justify-content-center">
           <div class="col-sm-6">
-            <select name="" id="" class="form-control input-lg"></select>
+            <select name="" id="" class="form-control input-lg" v-model="currentLocation">
+              <option value="">---全部---</option>
+              <option :value="item" v-for="item in locations">{{item}}</option>
+            </select>
           </div>
         </div>
       </div>
@@ -32,7 +35,7 @@
           <div class="col-10">
             <div class="bg-white p-3 shadow-sm">
               <h4>熱門行政區</h4>
-              <button class="btn btn-primary px-4">苓雅區</button>
+              <button class="btn btn-primary px-4" @click="currentLocation ='苓雅區' " >苓雅區</button>
             </div>
           </div>
         </div>
@@ -42,7 +45,7 @@
       <hr class="my-5">
       <section>
         <div class="row">
-          <div class="col-sm-6 mb-3 " v-for="item in filterData">
+          <div class="col-sm-6 mb-3 " v-for="item in filterData[currentPage]">
             <div class="card shadow-sm border-0 h-100">
               <div class="card-header bg-cover" :style="{backgroundImage: `url(${item.Picture1})`}" style="height: 220px; ">
               </div>
@@ -81,21 +84,15 @@
       </section>
       <nav class="my-5" aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
+          <!-- <li class="page-item disabled">
             <a class="page-link" href="#" tabindex="-1">Previous</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">1</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">2</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">3</a>
-          </li>
+          </li> -->
+          <li class="page-item" :class="{active: currentPage === page -1}" v-for="page in filterData.length" >
+            <a class="page-link" href="#" @click.prevent="currentPage= page -1">{{page}}</a>
+          <!-- </li>          
           <li class="page-item">
             <a class="page-link" href="#">Next</a>
-          </li>
+          </li> -->
         </ul>
       </nav>
     </div>
@@ -115,7 +112,9 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.js"></script>
+  
   <script src="./all.js"></script>
+  
 </body>
 
 </html>
